@@ -1,0 +1,22 @@
+const express = require("express");
+const cors = require("cors");
+
+const app = express();
+app.use(cors());
+
+let winnerColor = "red"; // Default winner
+
+// API to get game result
+app.get("/get-result", (req, res) => {
+    res.json({ winner: winnerColor });
+});
+
+// API to set winner (Admin use only)
+app.get("/set-winner/:color", (req, res) => {
+    const { color } = req.params;
+    winnerColor = color;
+    res.json({ message: `Winner set to ${color}` });
+});
+
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
